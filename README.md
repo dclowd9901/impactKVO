@@ -4,7 +4,7 @@ A lightweight KVO class for Impact.js
 
 ## Install
 
-From your `lib` directory (skip this step if you already have plugins):
+From your `lib` directory:
     
     mkdir plugins
     cd plugins
@@ -65,6 +65,8 @@ After `init`, your `panelModel` instance will now contain a new property:
 
     panelModel.get('newOption') // returns '2', as that was the default value set in the dom
 
+It creates properties for *any element* that is an ancestor of the instantiated DOM element that contains a name attribute. The property names will be the same as the name attribute value (in this case, `newOption`).
+
 If I:
   
     panelModel.set('newOption', '1');
@@ -92,7 +94,7 @@ Adds an observer to a property change. It is recommended that you pass the scope
 
 `.update( *propertyName*, *object*, *[silent]* )`
 
-Like `set`, only it doesn't completely overwrite the value (good for maintaining more complex objects).
+Like `set`, only for structured objects. It allows you to overwrite properties, while leaving existing ones intact.
 
 If I have a property on a class with the value:
 
@@ -109,14 +111,14 @@ and I `set`:
 
 Alternatively, if I `update`:
 
-    instantiatedClass.set('example', { 'bar': 'car' });
+    instantiatedClass.update('example', { 'bar': 'car' });
  
     instantiatedClass.get('example')
     // returns {'foo' : 2 'bar' : 'car'}
 
 Any properties you set in `update` overwrite the existing properties for that object:
 
-    instantiatedClass.set('example', { 'foo': 'car' });
+    instantiatedClass.update('example', { 'foo': 'car' });
  
     instantiatedClass.get('example')
     // returns {'foo' : 'car'}
