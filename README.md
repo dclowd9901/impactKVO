@@ -39,7 +39,8 @@ Let's say I was making a new debug panel:
     .requires(
       'dom.ready',
       'impact.game',
-      'impact.debug.menu'
+      'impact.debug.menu',
+      'plugins.kvo.kvo'
     )
     .defines(function(){
       NewDebugPanel = ig.DebugPanel.extend({
