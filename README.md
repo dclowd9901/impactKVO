@@ -18,11 +18,11 @@ Key-value observation allows you to bind event handlers to specific value change
       console.log( value, formerValue );
     }
 
-    var player = new KVOEntityPlayer() // extended from EntityPlayer
-    player.set('name', 'Bob'); // Sets player.name to "Bob"
+    var model = new KVO();
+    model.set('name', 'Bob'); // Sets model.name to "Bob"
 
-    player.observe('name', doSomething, this) // doSomething will be called when 'name' changes, and doSomething will operate with the scope of 'this'
-    player.set('name', 'Robert');
+    model.observe('name', doSomething, this) // doSomething will be called when 'name' changes, and doSomething will operate with the scope of 'this'
+    model.set('name', 'Robert');
 
     // doSomething is fired, output is:
     // 'Robert', 'Bob'
@@ -46,7 +46,7 @@ Let's say I was making a new debug panel:
         init: function( name, label ){
           this.parent( name, label );
 
-          panelModel = new PanelModelKVO( $('.newPanel')[0] );
+          panelModel = new KVO( $('.newPanel')[0] );
         }
       });
 
