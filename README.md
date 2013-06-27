@@ -114,7 +114,7 @@ Alternatively, if I `update`:
     instantiatedClass.update('example', { 'bar': 'car' });
  
     instantiatedClass.get('example')
-    // returns {'foo' : 2 'bar' : 'car'}
+    // returns {'foo' : 2, 'bar' : 'car'}
 
 Any properties you set in `update` overwrite the existing properties for that object:
 
