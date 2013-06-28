@@ -81,19 +81,31 @@ And, of course, making changes to that value in either case will trigger whateve
 
 ## API
 
-`.get( *propertyName* )`
+`.get( propertyName )`
+@propertyName string
 
 Returns value of that property in the class.
 
-`.set( *propertyName*, *value*, *[silent]* )`
+`.set( propertyName, value, [data], [silent] )`
+@propertyName string
+@value        any
+@data         (optional) any
+@silent       boolean
 
 Sets the value of the property name in the class (and updates the associated DOM element as well, if there is one). It will subsequently fire attached observers in the order which they were attached. You can also opt to silence the change, thus not causing the observers to fire. 
 
-`.observe( *propertyName*, *function*, *scope* )`
+`.observe( propertyName, callback, scope )`
+@propertyName string
+@callback     function
+@scope        object
 
 Adds an observer to a property change. It is recommended that you pass the scope as well, especially if you're making references to other properties/methods of your listening class. Generally speaking, scope should be set to `this` wherever you use this method.
 
-`.update( *propertyName*, *object*, *[silent]* )`
+`.update( propertyName, value, [data], [silent] )`
+@propertyName string
+@value        object
+@data         any
+@silent       boolean
 
 Like `set`, only for structured objects. It allows you to overwrite properties, while leaving existing ones intact.
 
