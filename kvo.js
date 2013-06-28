@@ -1,4 +1,4 @@
-ig.module('plugins.kvo')
+ig.module('plugins.kvo.kvo')
 .requires('impact.impact')
 .defines( function(){
 
@@ -6,12 +6,16 @@ KVO = ig.Class.extend({
   observers: {},
   formEl: null,
 
-  init: function( form ){
+  init: function( form, passedObservers ){
     if( form ){
       this.formEl = $(form);
 
       this._eventInputs();
       this._setInitialVals();
+    }
+
+    if( passedObservers ){
+      this.observers = passedObservers;
     }
   },
 
@@ -19,7 +23,7 @@ KVO = ig.Class.extend({
     return this[propName];
   },
 
-  set: function( propName, value, silent ){
+  set: function( propName, value, data, silent ){
     var former = this[propName],
         i;
 
@@ -28,15 +32,15 @@ KVO = ig.Class.extend({
 
     if( !silent && this.observers[propName] ){
       for( i = 0; i < this.observers[propName].length; i++ ){
-        this.observers[propName][i]( value, former );
+        this.observers[propName][i]( value, former, data );
       }
     }
   },
 
-  update: function( propName, obj, silent ){
-    var combined = _.defaults( obj, this[propName] );
+  update: function( propName, obj, data, silent ){
+    var combined = $.extend( this[propName], obj );
 
-    this.set( propName, combined, silent );
+    this.set( propName, combined, data, silent );
   },
 
   observe: function( propName, fn, scope ){
@@ -68,10 +72,11 @@ KVO = ig.Class.extend({
   },
 
   _setInitialVals: function(){
-    var inputs = $('[name]'),
-        self = this;
+    var $inputs = $('[name]'),
+        self = this,
+        i;
 
-    _.forEach( inputs, function( input ){
+    $inputs.each( function( input ){
       self[input.name] = input.value;
     });
   }
